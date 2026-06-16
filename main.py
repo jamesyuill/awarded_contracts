@@ -144,8 +144,9 @@ try:
     # INSERT: JOIN TABLE
     # ----------------------------
     if award_supplier_rows:
-        supabase.table("award_suppliers").insert(
-            award_supplier_rows
+        supabase.table("award_suppliers").upsert(
+            award_supplier_rows,
+            on_conflict="ocid,supplier_name"
         ).execute()
 
     # ----------------------------
