@@ -151,12 +151,12 @@ try:
             for row in award_supplier_rows
         }
 
-    award_supplier_rows = list(deduped.values())
+        award_supplier_rows = list(deduped.values())
 
-    supabase.table("award_suppliers").upsert(
-        award_supplier_rows,
-        on_conflict="ocid,supplier_name"
-    ).execute()
+        supabase.table("award_suppliers").upsert(
+            award_supplier_rows,
+            on_conflict="ocid,supplier_name"
+        ).execute()
 
     # ----------------------------
     # SUCCESS LOG
