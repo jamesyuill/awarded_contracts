@@ -143,11 +143,20 @@ try:
     # ----------------------------
     # INSERT: JOIN TABLE
     # ----------------------------
+
+
     if award_supplier_rows:
-        supabase.table("award_suppliers").upsert(
-            award_supplier_rows,
-            on_conflict="ocid,supplier_name"
-        ).execute()
+        deduped = {
+            (row["ocid"], row["supplier_name"]): row
+            for row in award_supplier_rows
+        }
+
+    award_supplier_rows = list(deduped.values())
+
+    supabase.table("award_suppliers").upsert(
+        award_supplier_rows,
+        on_conflict="ocid,supplier_name"
+    ).execute()
 
     # ----------------------------
     # SUCCESS LOG
